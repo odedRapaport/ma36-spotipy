@@ -1,4 +1,5 @@
 from album import Album
+from song import Song
 
 
 class Artist:
@@ -6,3 +7,17 @@ class Artist:
         self.id = id
         self.name = name
         self.albums = albums
+
+    def add_album(self, album: Album):
+        self.albums.append(album)
+
+    def add_song(self, album_id, song: Song):
+        for album in self.albums:
+            if album.id == album_id:
+                album.add_song(song)
+
+    def contains_album(self, id: str):
+        for album in self.albums:
+            if album.id == id:
+                return True
+        return False
