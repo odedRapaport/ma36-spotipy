@@ -26,5 +26,6 @@ class Artist:
         songs = []
         for album in self.albums:
             for song in album.songs:
-                songs.append(song)
+                if song.id not in [song_to_id.id for song_to_id in songs]:
+                    songs.append(song)
         return songs

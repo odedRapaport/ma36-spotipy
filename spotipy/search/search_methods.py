@@ -19,11 +19,12 @@ def get_top_songs_by_artist(music_manager: MusicManager, artist_id: str):
     restricted_top_songs_number = JsonReader("configuration.json").read().get('search').get('top_songs_to_search_number')
     for artist in music_manager.artists:
         if artist.id == artist_id:
-            all_songs = artist.get_all_songs().sort(key=compare_by_popularity)
+            all_songs = artist.get_all_songs()
+            all_songs.sort(key=compare_by_popularity)
             if len(all_songs) >= restricted_top_songs_number:
                 return all_songs
             else:
-                return all_songs[:restricted_top_songs_number]
+                return [song.name for song in all_songs[:restricted_top_songs_number]]
     raise ArtistNotFoundException
 
 
@@ -36,7 +37,7 @@ def get_songs_by_album(music_manager: MusicManager, album_id: str):
                     if song not in songs:
                         songs.append(song)
     if len(songs) > 0:
-        return songs
+        return [song.name for song in songs]
     raise AlbumNotFoundException
 
 
