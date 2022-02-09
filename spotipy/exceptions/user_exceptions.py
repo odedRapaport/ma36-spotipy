@@ -1,0 +1,2 @@
+class PlaylistIsAlreadyExistException(Exception):
+    pass
