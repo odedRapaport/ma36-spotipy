@@ -1,5 +1,7 @@
 from extract.reader import JsonReader
+from music.music_manager import MusicManager
+from extract.extract_all_songs import extract_all_songs
 
 
-song = JsonReader("C:\spotipy_songs\song_1bFSitBqVkOrZ5geYAHEKX.json").read()
-print(song)
+music_manager = MusicManager()
+music_manager = extract_all_songs(music_manager)

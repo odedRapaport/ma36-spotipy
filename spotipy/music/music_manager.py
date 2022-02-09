@@ -1,6 +1,6 @@
-from artist import Artist
-from album import Album
-from song import Song
+from music.artist import Artist
+from music.album import Album
+from music.song import Song
 
 
 class MusicManager:
@@ -8,13 +8,14 @@ class MusicManager:
         self.artists = []
 
     def add_track(self, track: dict):
+        track = track.get('track')
         song = Song(track.get('id'), track.get('name'), track.get('popularity'))
         album = Album(track.get('album').get('id'), track.get('album').get('name'), [song])
         for artist in track.get('artists'):
             if not self.contains_artist(artist.get('id')):
-                self.artists.append(Artist(artist.get('id'), artist.get('name'), album))
+                self.artists.append(Artist(artist.get('id'), artist.get('name'), [album]))
             else:
-                self.add_track_to_artist(artist.id, album)
+                self.add_track_to_artist(artist.get('id'), album)
 
     def contains_artist(self, id: str):
         for artist in self.artists:

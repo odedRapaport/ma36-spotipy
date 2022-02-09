@@ -1,9 +1,9 @@
-from album import Album
-from song import Song
+from music.album import Album
+from music.song import Song
 
 
 class Artist:
-    def __init__(self, id: str, name: str, albums: list(Album)):
+    def __init__(self, id: str, name: str, albums: list):
         self.id = id
         self.name = name
         self.albums = albums
