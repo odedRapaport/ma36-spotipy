@@ -2,21 +2,43 @@ from music.music_manager import MusicManager
 from music.song import Song
 from exceptions.search_exceptions import ArtistNotFoundException, AlbumNotFoundException
 from extract.reader import JsonReader
+from users.user import User
+from collections.abc import Iterable
 
 
-def get_all_artists(music_manager: MusicManager):
+def decorator_by_user_type(func):
+    def inner(*args):
+        func_result = func(*args)
+        if isinstance(func_result, Iterable):
+            search_result_restrict = JsonReader("configuration.json").read().get('users').get(
+                "not_premium_search_result_restrict")
+            if (not args[0].is_premium) and len(func_result) > search_result_restrict:
+                return func_result[:search_result_restrict]
+            else:
+                return func_result
+        else:
+            return func_result
+
+    return inner
+
+
+@decorator_by_user_type
+def get_all_artists(user: User, music_manager: MusicManager):
     return [artist.name for artist in music_manager.artists]
 
 
-def get_albums_by_artist(music_manager: MusicManager, artist_id: str):
+@decorator_by_user_type
+def get_albums_by_artist(user: User, music_manager: MusicManager, artist_id: str):
     for artist in music_manager.artists:
         if artist.id == artist_id:
             return [album.name for album in artist.albums]
     raise ArtistNotFoundException
 
 
-def get_top_songs_by_artist(music_manager: MusicManager, artist_id: str):
-    restricted_top_songs_number = JsonReader("configuration.json").read().get('search').get('top_songs_to_search_number')
+@decorator_by_user_type
+def get_top_songs_by_artist(user: User, music_manager: MusicManager, artist_id: str):
+    restricted_top_songs_number = JsonReader("configuration.json").read().get('search').get(
+        'top_songs_to_search_number')
     for artist in music_manager.artists:
         if artist.id == artist_id:
             all_songs = artist.get_all_songs()
@@ -28,7 +50,8 @@ def get_top_songs_by_artist(music_manager: MusicManager, artist_id: str):
     raise ArtistNotFoundException
 
 
-def get_songs_by_album(music_manager: MusicManager, album_id: str):
+@decorator_by_user_type
+def get_songs_by_album(user: User, music_manager: MusicManager, album_id: str):
     songs = []
     for artist in music_manager.artists:
         for album in artist.albums:
