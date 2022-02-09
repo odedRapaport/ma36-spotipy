@@ -4,5 +4,9 @@
   },
   "search": {
     "top_songs_to_search_number": 10
+  },
+  "users": {
+    "not_premium_playlists_restrict": 5,
+    "not_premium_songs_per_playlist_restrict": 20
   }
 }
