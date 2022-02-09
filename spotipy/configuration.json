@@ -1,5 +1,8 @@
 {
   "extract_music": {
     "path": "C:\\spotipy_songs"
+  },
+  "search": {
+    "top_songs_to_search_number": 10
   }
 }

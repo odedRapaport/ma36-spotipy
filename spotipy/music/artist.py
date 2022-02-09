@@ -21,3 +21,10 @@ class Artist:
             if album.id == id:
                 return True
         return False
+
+    def get_all_songs(self):
+        songs = []
+        for album in self.albums:
+            for song in album.songs:
+                songs.append(song)
+        return songs
