@@ -1,10 +1,10 @@
 {
   "1": {
     "username": "oded",
-    "is_premium": "True"
+    "is_premium": false
   },
   "2": {
     "username": "Joji",
-    "is_premium": "True"
+    "is_premium": true
   }
 }
