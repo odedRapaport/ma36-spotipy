@@ -6,6 +6,7 @@ from users.user import User
 from users.users_manager import login
 from search.search_methods import *
 from exceptions.user_exceptions import UserNotFoundException
+from exceptions.search_exceptions import ArtistNotFoundException, AlbumNotFoundException
 
 
 def run():
@@ -42,14 +43,26 @@ def print_all_artists(is_restrict: bool, music_manager: MusicManager):
 
 def print_albums_by_artist(is_restrict: bool, music_manager: MusicManager):
     artist_id = str(input("enter artist id:"))
-    print(get_albums_by_artist(is_restrict, music_manager, artist_id))
+    try:
+        print(get_albums_by_artist(is_restrict, music_manager, artist_id))
+    except ArtistNotFoundException:
+        print("artist does not exist, please try again")
+        print_albums_by_artist(is_restrict, music_manager)
 
 
 def print_top_songs_by_artist(is_restrict: bool, music_manager: MusicManager):
     artist_id = str(input("enter artist id:"))
-    print(get_top_songs_by_artist(is_restrict, music_manager, artist_id))
+    try:
+        print(get_top_songs_by_artist(is_restrict, music_manager, artist_id))
+    except ArtistNotFoundException:
+        print("artist does not exist, please try again")
+        print_albums_by_artist(is_restrict, music_manager)
 
 
 def print_songs_by_album(is_restrict: bool, music_manager: MusicManager):
     album_id = str(input("enter album id:"))
-    print(get_songs_by_album(is_restrict, music_manager, album_id))
+    try:
+        print(get_songs_by_album(is_restrict, music_manager, album_id))
+    except ArtistNotFoundException:
+        print("album does not exist, please try again")
+        print_albums_by_artist(is_restrict, music_manager)
