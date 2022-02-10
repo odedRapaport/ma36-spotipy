@@ -7,7 +7,8 @@ from exceptions.user_exceptions import ArtistNotFoundException
 
 class ArtistUser(User):
     def __init__(self, username: str):
-        if username in get_all_artists(User('', True), extract_all_songs(MusicManager())):
+        self.is_premium = True
+        if username in get_all_artists(self, extract_all_songs(MusicManager())):
             super(ArtistUser, self).__init__(username, True)
         else:
             raise ArtistNotFoundException
