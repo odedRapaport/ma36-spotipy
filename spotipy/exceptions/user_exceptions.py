@@ -4,3 +4,7 @@ class PlaylistIsAlreadyExistException(Exception):
 
 class NotPremiumUserRestrictedException(Exception):
     pass
+
+
+class ArtistNotFoundException(Exception):
+    pass
