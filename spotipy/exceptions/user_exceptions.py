@@ -8,3 +8,7 @@ class NotPremiumUserRestrictedException(Exception):
 
 class ArtistNotFoundException(Exception):
     pass
+
+
+class UserNotFoundException(Exception):
+    pass

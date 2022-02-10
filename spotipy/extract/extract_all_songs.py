@@ -11,5 +11,5 @@ def extract_all_songs(music_manager: MusicManager):
         music_manager.add_track(track)
     logging.basicConfig(filename=JsonReader("configuration.json").read().get('logging').get("logs_file_name"),
                         format='%(asctime)s - %(levelname)s - %(message)s', filemode='a', level=logging.DEBUG)
-    logging.info("extract all songs")
+    logging.debug("extract all songs")
     return music_manager

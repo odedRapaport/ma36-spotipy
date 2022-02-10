@@ -12,7 +12,7 @@ def decorator_by_user_type(func):
         if isinstance(func_result, Iterable):
             search_result_restrict = JsonReader("configuration.json").read().get('users').get(
                 "not_premium_search_result_restrict")
-            if (not args[0].is_premium) and len(func_result) > search_result_restrict:
+            if (args[0]) and len(func_result) > search_result_restrict:
                 return func_result[:search_result_restrict]
             else:
                 return func_result
@@ -23,12 +23,12 @@ def decorator_by_user_type(func):
 
 
 @decorator_by_user_type
-def get_all_artists(user: User, music_manager: MusicManager):
+def get_all_artists(is_restrict: bool, music_manager: MusicManager):
     return [artist.name for artist in music_manager.artists]
 
 
 @decorator_by_user_type
-def get_albums_by_artist(user: User, music_manager: MusicManager, artist_id: str):
+def get_albums_by_artist(is_restrict: bool, music_manager: MusicManager, artist_id: str):
     for artist in music_manager.artists:
         if artist.id == artist_id:
             return [album.name for album in artist.albums]
@@ -36,7 +36,7 @@ def get_albums_by_artist(user: User, music_manager: MusicManager, artist_id: str
 
 
 @decorator_by_user_type
-def get_top_songs_by_artist(user: User, music_manager: MusicManager, artist_id: str):
+def get_top_songs_by_artist(is_restrict: bool, music_manager: MusicManager, artist_id: str):
     restricted_top_songs_number = JsonReader("configuration.json").read().get('search').get(
         'top_songs_to_search_number')
     for artist in music_manager.artists:
@@ -51,7 +51,7 @@ def get_top_songs_by_artist(user: User, music_manager: MusicManager, artist_id: 
 
 
 @decorator_by_user_type
-def get_songs_by_album(user: User, music_manager: MusicManager, album_id: str):
+def get_songs_by_album(is_restrict: bool, music_manager: MusicManager, album_id: str):
     songs = []
     for artist in music_manager.artists:
         for album in artist.albums:

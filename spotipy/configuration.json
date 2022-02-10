@@ -6,6 +6,7 @@
     "top_songs_to_search_number": 10
   },
   "users": {
+    "users_file_path": "users.json",
     "not_premium_playlists_restrict": 5,
     "not_premium_songs_per_playlist_restrict": 20,
     "not_premium_search_result_restrict": 5
