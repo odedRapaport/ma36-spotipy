@@ -15,3 +15,7 @@ class JsonReader(Reader):
     def read(self):
         with open(self.path) as json_file:
             return json.load(json_file)
+
+
+def config_read():
+    return JsonReader("configuration.json").read()

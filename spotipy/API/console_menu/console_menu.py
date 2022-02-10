@@ -2,6 +2,7 @@ from consolemenu import *
 from consolemenu.items import *
 
 from extract.extract_all_songs import extract_all_songs
+from users.user import User
 from users.users_manager import login
 from search.search_methods import *
 from exceptions.user_exceptions import UserNotFoundException
@@ -24,10 +25,14 @@ def login_to_spotipy():
 def console_menu(user: User):
     music_manager = extract_all_songs(MusicManager())
     menu = ConsoleMenu("spotipy menu")
-    menu.append_item(FunctionItem(text="print_all_artists", function=print_all_artists, args=[not user.is_premium, music_manager]))
-    menu.append_item(FunctionItem(text="print_albums_by_artist", function=print_albums_by_artist, args=[not user.is_premium, music_manager]))
-    menu.append_item(FunctionItem(text="print_top_songs_by_artist", function=print_top_songs_by_artist, args=[not user.is_premium, music_manager]))
-    menu.append_item(FunctionItem(text="print_songs_by_album", function=print_songs_by_album, args=[not user.is_premium, music_manager]))
+    menu.append_item(
+        FunctionItem(text="print_all_artists", function=print_all_artists, args=[not user.is_premium, music_manager]))
+    menu.append_item(FunctionItem(text="print_albums_by_artist", function=print_albums_by_artist,
+                                  args=[not user.is_premium, music_manager]))
+    menu.append_item(FunctionItem(text="print_top_songs_by_artist", function=print_top_songs_by_artist,
+                                  args=[not user.is_premium, music_manager]))
+    menu.append_item(FunctionItem(text="print_songs_by_album", function=print_songs_by_album,
+                                  args=[not user.is_premium, music_manager]))
     menu.show()
 
 

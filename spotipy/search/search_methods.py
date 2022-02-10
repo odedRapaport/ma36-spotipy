@@ -1,8 +1,7 @@
 from music.music_manager import MusicManager
 from music.song import Song
 from exceptions.search_exceptions import ArtistNotFoundException, AlbumNotFoundException
-from extract.reader import JsonReader
-from users.user import User
+from extract.reader import config_read
 from collections.abc import Iterable
 
 
@@ -10,7 +9,7 @@ def decorator_by_user_type(func):
     def inner(*args):
         func_result = func(*args)
         if isinstance(func_result, Iterable):
-            search_result_restrict = JsonReader("configuration.json").read().get('users').get(
+            search_result_restrict = config_read().get('users').get(
                 "not_premium_search_result_restrict")
             if (args[0]) and len(func_result) > search_result_restrict:
                 return func_result[:search_result_restrict]
@@ -37,7 +36,7 @@ def get_albums_by_artist(is_restrict: bool, music_manager: MusicManager, artist_
 
 @decorator_by_user_type
 def get_top_songs_by_artist(is_restrict: bool, music_manager: MusicManager, artist_id: str):
-    restricted_top_songs_number = JsonReader("configuration.json").read().get('search').get(
+    restricted_top_songs_number = config_read().get('search').get(
         'top_songs_to_search_number')
     for artist in music_manager.artists:
         if artist.id == artist_id:
